@@ -71,10 +71,11 @@ footer.note{font-size:12px;color:var(--grey);text-align:center;padding:20px;}
 .demo-banner a{color:#fff;text-decoration:underline}
 .demo-banner .x{position:absolute;right:10px;top:6px;background:none;border:none;color:#fff;font:inherit;cursor:pointer;opacity:.85;padding:4px 8px}
 .demo-banner .x:hover{opacity:1}
+.buildstamp{max-width:1180px;margin:0 auto;padding:4px 22px 30px;color:#8A9AA5;font-size:11px;letter-spacing:.04em;text-align:right}
 </style>
 </head>
 <body>
-<div class="demo-banner" id="demoBanner">DEMO — example data, add up to 15 of your own subscriptions and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">✕</button></div>
+<div class="demo-banner" id="demoBanner">DEMO â example data, add up to 15 of your own subscriptions and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">â</button></div>
 <div class="app" id="app"></div>
 
 <script id="engine">
@@ -218,7 +219,7 @@ var DEMO_MODE = true, DEMO_SUB_LIMIT = 23; /* 8 seeded + 15 room to try adding y
 function demoLimitReached(){
   if(!DEMO_MODE) return false;
   if(!STATE || !STATE.subs || STATE.subs.length < DEMO_SUB_LIMIT) return false;
-  alert("You've reached the "+DEMO_SUB_LIMIT+"-subscription demo limit.\n\nThis is just a preview — buy the full version for unlimited subscriptions, all features unlocked, and your own permanent copy.");
+  alert("You've reached the "+DEMO_SUB_LIMIT+"-subscription demo limit.\n\nThis is just a preview â buy the full version for unlimited subscriptions, all features unlocked, and your own permanent copy.");
   return true;
 }
 var CATEGORIES = ["Streaming","Software & SaaS","Fitness & Health","News & Reading","Gaming","Cloud Storage","Music","Other"];
@@ -354,7 +355,7 @@ function viewDash(){
     kpiCard("MONTHLY SPEND", formatMoney(monthly, cur), counts.active + " active subscriptions"),
     kpiCard("YEARLY SPEND", formatMoney(yearly, cur), "at current billing cycles"),
     kpiCard("SAVED FROM CANCELLING", formatMoney(savings, cur), "per month, no longer billed"),
-    kpiCard("MOST EXPENSIVE", top ? top.name : "—", top ? formatMoney(monthlyEquivalent(top.cost,top.cycle), cur) + "/mo" : "add a subscription")
+    kpiCard("MOST EXPENSIVE", top ? top.name : "â", top ? formatMoney(monthlyEquivalent(top.cost,top.cycle), cur) + "/mo" : "add a subscription")
   ]);
 
   var upcoming = upcomingRenewals(STATE.subs, todayISO(), 30);
@@ -368,7 +369,7 @@ function viewDash(){
   trials.forEach(function(s){ alertRows.push(alertRow("Free trial ends in " + daysUntil(s.trialEndsAt, todayISO()) + " days", s.name, "warn")); });
   priceUps.forEach(function(s){
     var last = s.priceHistory[s.priceHistory.length-1], prev = s.priceHistory[s.priceHistory.length-2];
-    alertRows.push(alertRow("Price rose " + formatMoney(prev.cost,cur) + " → " + formatMoney(last.cost,cur), s.name, "bad"));
+    alertRows.push(alertRow("Price rose " + formatMoney(prev.cost,cur) + " â " + formatMoney(last.cost,cur), s.name, "bad"));
   });
   var alertCard = el("div", { class: "card" }, [
     el("h2", {}, ["Needs attention"]),
@@ -412,7 +413,7 @@ function viewSubs(){
       el("td", {}, [s.category]),
       el("td", {}, [ formatMoney(s.cost, cur) + " / " + cycleLabel(s.cycle).toLowerCase() ]),
       el("td", {}, [ formatMoney(monthlyEquivalent(s.cost,s.cycle), cur) + "/mo" ]),
-      el("td", {}, [ s.status === "active" ? nextRenewalDate(s.startDate, s.cycle, todayISO()) : "—" ]),
+      el("td", {}, [ s.status === "active" ? nextRenewalDate(s.startDate, s.cycle, todayISO()) : "â" ]),
       el("td", {}, [ el("span", { class: "pill " + s.status }, [s.status]) ]),
       el("td", {}, [
         el("button", { class: "btn ghost small", onclick: function(){ openEdit(s.id); } }, ["Edit"])
@@ -450,7 +451,7 @@ function viewRenewals(){
       items.length ? el("div", {}, items.map(renewRow)) : el("div", { class: "empty" }, ["Nothing here."])
     ]);
   });
-  return el("div", {}, [ el("h2",{},["Upcoming renewals (90 days)"]), el("p",{class:"hint"},["Every active subscription's next billing date, calculated from its billing cycle — nothing to type in twice."]) ].concat(cards));
+  return el("div", {}, [ el("h2",{},["Upcoming renewals (90 days)"]), el("p",{class:"hint"},["Every active subscription's next billing date, calculated from its billing cycle â nothing to type in twice."]) ].concat(cards));
 }
 
 /* ---------- Categories ---------- */
@@ -497,7 +498,7 @@ function viewHistory(){
   var cancelled = STATE.subs.filter(function(s){ return s.status === "cancelled"; });
   var savings = cancelledMonthlySavings(STATE.subs);
   var savCard = el("div", { class: "card" }, [
-    el("h2", {}, ["Cancelled — money saved"]),
+    el("h2", {}, ["Cancelled â money saved"]),
     el("p", { class:"hint" }, ["What you used to pay for these before cancelling."]),
     el("div", { class: "kpi", style:"margin-bottom:12px;" }, [
       el("div", { class:"val" }, [ formatMoney(savings, cur) + "/mo" ]),
@@ -640,5 +641,6 @@ if(typeof window !== "undefined"){
 }
 })();
 </script>
+<div class="buildstamp noprint">Subscription Tracker &middot; build 2026-09-18 &middot; LedgerLoopStudio</div>
 </body>
 </html>
